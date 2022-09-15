@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:computiqquizapp/category_page/category.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../Questions/result_question.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -287,18 +287,18 @@ class _HomePageState extends State<HomePage> {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      foregroundColor: Colors.blueAccent,
                       side:
                           const BorderSide(color: Colors.blueAccent, width: 2),
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                     ),
                     onPressed: () {
+                      Get.to(const CategoryPage());
                       print('Pressed');
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                      child: Text("Let's Start ",
+                      child: Text("Let's Start",
                           style: TextStyle(
                               color: Colors.blueAccent,
                               fontSize: 24,
