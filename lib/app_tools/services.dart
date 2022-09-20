@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:computiqquizapp/homeScreen/models/CategoryModel.dart';
 import 'package:dio/dio.dart';
 
 class Services{
@@ -23,12 +26,12 @@ class Services{
     print(response.data['answers']);
   }
 
-  static getCategory() async {
-    dio.options.headers['authorization'] = 'Bearer $token';
-    var response = await dio.get('https://computiqquizapp.herokuapp.com/computiq/quiz_app/get_all_categories');
-    print(response);
-    print(response.data[0]);
-    print(response.data[0]['category_title']);
-  }
+ Future<CategoryModel?> getCategory() async {
+     dio.options.headers['authorization'] = 'Bearer $token';
+     var response = await dio.get('https://computiqquizapp.herokuapp.com/computiq/quiz_app/get_all_categories');
+
+     return CategoryModel.fromJson(response.data);
+
+ }
 
 }

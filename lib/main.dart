@@ -1,3 +1,4 @@
+import 'package:computiqquizapp/homeScreen/home_screen.dart';
 import 'package:computiqquizapp/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(),
+      home: HomePage(),
     );
   }
 }

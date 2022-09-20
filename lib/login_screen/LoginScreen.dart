@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
                 ButtonTheme(
                   height: 45,
                   disabledColor: Color(0xFF1A8CF7),
-                  child: RaisedButton(
+                  child: TextButton(
                     onPressed: (){
 
                       Get.offAll(HomePage());
