@@ -1,7 +1,11 @@
 import 'package:computiqquizapp/app_tools/data.dart';
-import 'package:computiqquizapp/app_tools/data_from_json/question.dart';
+import 'package:computiqquizapp/app_tools/data_from_json/category_json.dart';
+import 'package:computiqquizapp/app_tools/data_from_json/question_json.dart';
+import 'package:computiqquizapp/questions_page/questions_page.dart';
 import 'package:dio/dio.dart';
-
+import 'package:get/get.dart';
+import '../category_page/category.dart';
+import '../homeScreen/home_screen.dart';
 import '../login_screen/LoginScreen.dart';
 
 class Services{
@@ -13,10 +17,9 @@ class Services{
      var response = await dio.post(
          '${AppData.baseUrl}/signin?username=${usernameControl
              .text}&password=${passwordControl.text}');
-     print(response.headers);
      print(response.data);
      print(response.data['token']);
-
+     Get.offAll(HomePage());
    }
    catch(e){
      print(e);
@@ -28,19 +31,18 @@ class Services{
     var response = await dio.get('${AppData.baseUrl}/get_one_question/$questionId');
     AppData.questionData = Question.fromJson(response.data);
     print(AppData.questionData);
+    Get.offAll(QuestionsPage());
   }
 
   static getCategory() async {
     dio.options.headers['authorization'] = 'Bearer $token';
     var response = await dio.get('${AppData.baseUrl}/get_all_categories');
     List data=response.data;
-    print(response);
-    print(response.data[0]);
-    print(response.data[0]['category_title']);
-    final welcome = welcomeFromJson(response.data.toString());
-    print(welcome);
-
-
+    AppData.categoryData.add(data.map((e) => CategoryJson(categoryTitle: e.categoryTitle, categoryImage: e.categoryImage, categoryDescrition: e.categoryDescrition, questionsNumber: e.questionsNumber, questionsId: e.questionsId)));
+    print(AppData.categoryData[0].categoryTitle);
+    //Get.to(const CategoryPage());
   }
 
 }
+
+

@@ -27,21 +27,13 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 80),
           children: <Widget>[
-            Image.asset('images/image.png'),
-            textField(title: 'Username',isSecure: false, controller: usernameControl),
-            textField(title: 'Password',isSecure: true, controller: passwordControl),
+            Column(children: [
+              Image.asset('images/image.png'),
+              textField(title: 'Username',isSecure: false, controller: usernameControl),
+              textField(title: 'Password',isSecure: true, controller: passwordControl),
+              loginButton()
 
-            Container(
-              height: 45,
-              child: TextButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xFF1A8CF7)), ),
-                onPressed: (){
-               // Services.signIn();
-                Services.getQuestion('f8517441-0941-45b1-83b2-1701b69aee7a');
-                 // Get.offAll(HomePage());
-                },
-                child: Text('login' ,style: TextStyle(fontSize: 20,color: Colors.white),),
-              ),
-            )
+            ],)
 
           ],
         ),
@@ -50,7 +42,24 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Padding loginButton() {
+    return Padding(
+      padding: const EdgeInsets.only(top:10),
+      child: SizedBox(
+                height: 45,
+                width: 120 ,
+                child: TextButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Color(0xFF1A8CF7)), ),
+                  onPressed: (){
+                    Services.signIn();
+                  },
+                  child: Text('login' ,style: TextStyle(fontSize: 20,color: Colors.white),),
+                ),
+              ),
+    );
+  }
+
   Padding textField({required String title, required bool isSecure,required TextEditingController controller}) {
+    String? error;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: TextField(
@@ -58,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         textInputAction: TextInputAction.next, // Moves focus to next.
         obscureText: isSecure,
         decoration: InputDecoration(border: const OutlineInputBorder(),
-                 labelText: title,
+                 labelText: title,errorText: error
                ),
             ),
     );

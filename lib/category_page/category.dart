@@ -1,6 +1,6 @@
 import 'package:computiqquizapp/app_tools/data.dart';
 import 'package:computiqquizapp/app_tools/services.dart';
-import 'package:computiqquizapp/app_tools/data_from_json/question.dart';
+import 'package:computiqquizapp/app_tools/data_from_json/question_json.dart';
 import 'package:flutter/material.dart';
 
 import '../app_tools/app_theme.dart';
@@ -17,7 +17,6 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   void initState() {
    //Categories.categoryList= Services.getCategory();
-   //print(Categories.categoryList);
 
    super.initState();
   }
@@ -44,26 +43,13 @@ class _CategoryPageState extends State<CategoryPage> {
               ),
               Expanded(
                 child: ListView(
-                  children: [
-                    categoryCard(
-                        image: "images/image1.jpg",
-                        name: "web design",
-                        questiones: "10 questiones",
-                        description:
-                            "data Web design is the process of planning and executing multimedia content over a network."),
-                    categoryCard(
-                        image: "images/image1.jpg",
-                        name: "web design",
-                        questiones: "10 questiones",
-                        description:
-                            "data Web design is the process of planning and executing multimedia content over a network."),
-                    categoryCard(
-                        image: "images/image1.jpg",
-                        name: "web design",
-                        questiones: "10 questiones",
-                        description:
-                            "data Web design is the process of planning and executing multimedia content over a network."),
-                  ],
+                  children: AppData.categoryData.map(
+                    (e) => categoryCard(
+                  image: e.categoryTitle,
+                  name: e.categoryTitle,
+                  questiones: e.questionsNumber,
+                  description:e.categoryDescrition),
+        ).toList(),
                 ),
               ),
             ],
@@ -110,7 +96,7 @@ class categoryCard extends StatelessWidget {
               Opacity(
                 opacity: 0.8,
                 child: Image.asset(
-                  image,
+                  'image',
                 ),
               ),
               SizedBox(

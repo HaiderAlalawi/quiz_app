@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:computiqquizapp/app_tools/services.dart';
 import 'package:computiqquizapp/category_page/category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_tools/app_theme.dart';
+import '../app_tools/data.dart';
 
 
 class QuestionsPage extends StatefulWidget {
@@ -14,21 +16,24 @@ class QuestionsPage extends StatefulWidget {
 }
 
 class _QuestionsPageState extends State<QuestionsPage> {
-  static const maxSeconds = 60;
-  int seconds = maxSeconds;
+
+  @override
+  void initState() {
+    startTime();
+    super.initState();
+  }
+
+  int seconds = AppData.questionData.seconds;
   Timer? timer;
   void startTime() {
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       if (seconds > 0) {
         setState(() => seconds--);
       } else {
-        stopTimer();
+        timer?.cancel();
+
       }
     });
-  }
-
-  void stopTimer() {
-    timer?.cancel();
   }
 
   @override
@@ -58,7 +63,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                       ),
                       questionText(
                         name:
-                            "ejowiosjeigjiaejfiqw qwjhfuiq 83 892r 83yr 83u r8y8 ",
+                        AppData.questionData.title,
                       ),
                       options(text: "Options 1"),
                       options(text: "Options 2"),
@@ -71,12 +76,9 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           ),
                           buildTimer(),
                           const SizedBox(
-                            height: 30,
+                            height: 164,
                           ),
-                          buildButtons(),
-                          const SizedBox(
-                            height: 134,
-                          ),
+
                         ]),
                       ),
                     ],
@@ -118,13 +120,6 @@ class _QuestionsPageState extends State<QuestionsPage> {
     );
   }
 
-  Widget buildButtons() {
-    return ButtonWidget(
-        text: "Start Timer",
-        onClcked: () {
-          startTime();
-        });
-  }
 
   Widget buildTimer() => SizedBox(
         width: 100,
@@ -138,7 +133,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
               valueColor: AlwaysStoppedAnimation(Color(0xFFF44848)),
             ),
             CircularProgressIndicator(
-              value: seconds / maxSeconds,
+              value: seconds / AppData.questionData.seconds,
               strokeWidth: 5,
               valueColor: AlwaysStoppedAnimation(Color(0xFF33ADF8)),
             ),
@@ -151,7 +146,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
 
   Widget buildTime() {
     return Text(
-      "$seconds",
+      "${seconds}",
       style: TextStyle(
           fontWeight: FontWeight.bold, color: Colors.black, fontSize: 40),
     );
@@ -206,7 +201,7 @@ class buldSheet extends StatelessWidget {
                   ),
                   buldSheetContainer(
                     text: "text",
-                    onPress: () => print("1"),
+                    onPress: () =>  Services.getQuestion('f8517441-0941-45b1-83b2-1701b69aee7a'),
                   ),
                   buldSheetContainer(
                     text: "text",

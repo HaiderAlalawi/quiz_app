@@ -1,3 +1,4 @@
+import 'package:computiqquizapp/app_tools/services.dart';
 import 'package:computiqquizapp/category_page/category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -293,7 +294,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                     ),
                     onPressed: () {
-                      Get.to(const CategoryPage());
+                      Services.getCategory();
                       print('Pressed');
                     },
                     child: const Padding(
@@ -306,51 +307,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2, color: Colors.black12), //<-- SEE HERE
-                    ),
-
-                    hintText: 'Team 1'
-                ),
-
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2, color: Colors.black12), //<-- SEE HERE
-                    ),
-
-                    hintText: 'Team 1'
-                ),
-
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2, color: Colors.black12), //<-- SEE HERE
-                    ),
-
-                    hintText: 'Team 1'
-                ),
-
               ),
             ),
           ],
