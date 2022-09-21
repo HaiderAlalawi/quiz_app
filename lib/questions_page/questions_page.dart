@@ -52,71 +52,58 @@ class _QuestionsPageState extends State<QuestionsPage> {
         padding: const EdgeInsets.only(left: 20, right: 20),
         child: Stack(
           children: [
-            Expanded(
-              child: ListView(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                teamName(
+                  name: "Team 1",
+                ),
+                questionText(
+                  name:
+                  AppData.questionData.title,
+                ),
+                      SizedBox(
+                      height:350,
+                        child: ListView(
+                          children: AppData.questionData.answers.map((e) => options(text: e.title)).toList(),
+                        ),
+                      ),
+                Center(child: buildTimer()),
+              ],
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      teamName(
-                        name: "Team One ",
+                      button(
+                        text: "Help",
+                        color: AppTheme.yellow,
+                        onPress: () {
+                          showModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(15))),
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (context) => buldSheet());
+                        },
                       ),
-                      questionText(
-                        name:
-                        AppData.questionData.title,
-                      ),
-                      options(text: "Options 1"),
-                      options(text: "Options 2"),
-                      options(text: "Options 3"),
-                      options(text: "Options 4"),
-                      Center(
-                        child: Column(children: [
-                          const SizedBox(
-                            height: 13,
-                          ),
-                          buildTimer(),
-                          const SizedBox(
-                            height: 164,
-                          ),
+                      button(
+                          text: "Next",
+                          color: AppTheme.mainColor,
+                          onPress: () => Get.to(CategoryPage())),
+                    ]
+                ),
+              ),
+            )
 
-                        ]),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              bottom: 65,
-              right: 0,
-              left: 0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  button(
-                    text: "Help",
-                    color: AppTheme.yellow,
-                    onPress: () {
-                      showModalBottomSheet(
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(15))),
-                          isScrollControlled: true,
-                          context: context,
-                          builder: (context) => buldSheet());
-                    },
-                  ),
-                  button(
-                      text: "Next",
-                      color: AppTheme.mainColor,
-                      onPress: () => Get.to(CategoryPage())),
-                ],
-              ),
-            ),
           ],
-        ),
-      ),
+        )
+    )
     );
   }
 
@@ -316,7 +303,7 @@ class options extends StatelessWidget {
       padding: const EdgeInsets.only(top: 13, bottom: 13),
       child: Container(
         height: 53,
-        width: 12324,
+        width: double.maxFinite,
         child: TextButton(
           onPressed: () {
             //Books.makeAsTrue(b.isSold);

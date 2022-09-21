@@ -25,13 +25,15 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 80),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 150),
           children: <Widget>[
-            Column(children: [
-              Image.asset('images/image.png'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+              Image.asset('images/image.png',width: 250,),
               textField(title: 'Username',isSecure: false, controller: usernameControl),
               textField(title: 'Password',isSecure: true, controller: passwordControl),
-              loginButton()
+              Center(child: loginButton())
 
             ],)
 

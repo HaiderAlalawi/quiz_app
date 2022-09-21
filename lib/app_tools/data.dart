@@ -7,7 +7,7 @@ import 'data_from_json/category_json.dart';
 class AppData{
   static String baseUrl='https://computiqquizapp.herokuapp.com/computiq/quiz_app';
   static late Question questionData;
-  static late List categoryData=[];
+  static  List categoryData=[];
 
 }
 
