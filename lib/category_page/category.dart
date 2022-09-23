@@ -4,10 +4,15 @@ import '../app_tools/app_theme.dart';
 import '../questions_page/questions_page.dart';
 
 class CategoryPage extends StatelessWidget {
-  const CategoryPage({Key? key}) : super(key: key);
+  CategoryPage({Key? key,  required this.teamInformation}) : super(key: key);
+
+  Map<String, int> teamInformation;
+
+
 
   @override
   Widget build(BuildContext context) {
+    print(teamInformation);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -32,7 +37,7 @@ class CategoryPage extends StatelessWidget {
                   children: [
                     categoryCard(
                         image: "images/image1.jpg",
-                        name: "web design",
+                        name: teamInformation['team 1'].toString(),
                         questiones: "10 questiones",
                         description:
                             "data Web design is the process of planning and executing multimedia content over a network."),

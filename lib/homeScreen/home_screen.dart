@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:computiqquizapp/app_tools/services.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:computiqquizapp/category_page/category.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../core/Responsive/responsive_screen.dart';
 import 'models/CategoryModel.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,6 +20,10 @@ class _HomePageState extends State<HomePage> {
   int number = 1;
   late Future<List<CategoryModel>> data;
 
+  Map<String, int> teamInformation = {
+    "team 1": 0,
+  };
+
   @override
   void initState()  {
     // TODO: implement initState
@@ -28,6 +33,10 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    MediaQueryData queryData = MediaQuery.of(context);
+    ResponsiveScreenApp _sizeResponsove = ResponsiveScreenApp(context, queryData);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -35,8 +44,19 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.transparent,
         title: Image.asset(
           "images/image.png",
-          width: 100,
+          width: _sizeResponsove.iconAppBar,
         ),
+
+        actions: [
+          IconButton(
+              onPressed: () {
+
+                // LogOut Function
+              },
+              icon:  Icon(Icons.logout, color: Colors.black,size: _sizeResponsove.iconApp,)
+
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -45,97 +65,107 @@ class _HomePageState extends State<HomePage> {
             Container(
               margin: const EdgeInsets.only(top: 20),
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomRight: Radius.circular(200),
-                  bottomLeft: Radius.circular(200),
+                borderRadius:  BorderRadius.only(
+                  bottomRight: Radius.circular(_sizeResponsove.radiusImageApp),
+                  bottomLeft: Radius.circular(_sizeResponsove.radiusImageApp),
                 ),
                 child: Image.asset(
                   "images/cover.png",
-                  height: 250,
+                  height: _sizeResponsove.heightRadiusImageApp,
                   width: double.infinity,
                   fit: BoxFit.fill,
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+             Padding(
+              padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                   width: double.infinity,
                   child: Text(
                     'Category',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: _sizeResponsove.textResponsiveApp, fontWeight: FontWeight.bold),
                   )),
             ),
             SizedBox(
-              height: 250,
+              height: _sizeResponsove.highCategory,
               child: FutureBuilder(
                 future: data,
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasError) {
                   return const Text("Error, Check Internet");
                 } else if (!snapshot.hasData) {
-                  return Text("Please Wait .....", style: TextStyle(fontWeight: FontWeight.bold),) ;
+                  return const Text("Please Wait .....", style: TextStyle(fontWeight: FontWeight.bold),) ;
                 } else {
-                  return ListView.builder(
-
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
+                  return CarouselSlider.builder(
 
                     itemCount: snapshot.data!.length ?? 0,
+                    itemBuilder: (BuildContext context, int index, int pageViewIndex) =>
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
 
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
 
-                        width: 190,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 1),
-                              blurRadius: 5,
-                              color: Colors.black.withOpacity(0.3),
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'images/1.jpeg',
-                                height: 190,
-                                width: double.infinity,
-                                fit: BoxFit.fill,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(0, 1),
+                                blurRadius: 5,
+                                color: Colors.black.withOpacity(0.3),
                               ),
-                            ),
-                            const Spacer(),
-                            SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  snapshot.data[index].categoryTitle,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24),
-                                  textAlign: TextAlign.start,
-                                )),
-                            SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  "Number Of Question : " + snapshot.data[index].questionsNumber.toString(),
-                                  style: const TextStyle(
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.asset(
+                                  'images/1.jpeg',
+                                  height: _sizeResponsove.imageCategory,
+                                  width: double.infinity,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
 
-                                    fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: Colors.black45),
-                                  textAlign: TextAlign.start,
-                                )),
-                          ],
+                              Spacer(),
+                              SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    snapshot.data[index].categoryTitle,
+                                    style:  TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: _sizeResponsove.textResponsiveApp),
+                                    textAlign: TextAlign.start,
+                                  )),
+                              SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    "Number Of Question : " + snapshot.data[index].questionsNumber.toString(),
+                                    style:  TextStyle(
+
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: _sizeResponsove.textResponsiveApp - 10,
+                                        color: Colors.black45),
+                                    textAlign: TextAlign.start,
+                                  )),
+                            ],
+                          ),
                         ),
-                      );
-                    },
+                    options: CarouselOptions(
+                      height: 400,
+                      aspectRatio: 16/9,
+                      viewportFraction: 0.54,
+                      initialPage: 0,
+                      enableInfiniteScroll: true,
+                      reverse: false,
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 3),
+                      autoPlayAnimationDuration: Duration(milliseconds: 800),
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enlargeCenterPage: false,
+                      scrollDirection: Axis.horizontal,
+                    ),
                   );
                 }
               }),
@@ -143,11 +173,11 @@ class _HomePageState extends State<HomePage> {
             Container(
               margin: const EdgeInsets.symmetric(vertical: 10),
               padding: const EdgeInsets.all(8.0),
-              child: const SizedBox(
+              child:  SizedBox(
                   width: double.infinity,
                   child: Text(
                     'Enter Number Of Teams',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: _sizeResponsove.textResponsiveApp, fontWeight: FontWeight.bold),
                   )),
             ),
             Padding(
@@ -166,10 +196,12 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         InkWell(
                             onTap: () {
-                              if (number > 0) {
+                              if (number > 1) {
                                 setState(() {
+                                  teamInformation.remove('team $number');
                                   number--;
                                 });
+                                print(teamInformation);
                               }
                             },
                             child: const Icon(
@@ -194,7 +226,10 @@ class _HomePageState extends State<HomePage> {
                             onTap: () {
                               setState(() {
                                 number++;
+                                teamInformation['team $number'] = 0;
                               });
+
+                              print(teamInformation);
                             },
                             child: const Icon(
                               Icons.add,
@@ -212,7 +247,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                     ),
                     onPressed: () {
-                      Get.to(const CategoryPage());
+                      Get.to(CategoryPage(teamInformation: teamInformation,));
                       print('Pressed');
                     },
                     child: const Padding(
@@ -227,39 +262,8 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2, color: Colors.black12), //<-- SEE HERE
-                    ),
-                    hintText: 'Team 1'),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2, color: Colors.black12), //<-- SEE HERE
-                    ),
-                    hintText: 'Team 1'),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 2, color: Colors.black12), //<-- SEE HERE
-                    ),
-                    hintText: 'Team 1'),
-              ),
-            ),
+
+
           ],
         ),
       ),

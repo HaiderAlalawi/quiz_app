@@ -108,7 +108,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
                   button(
                       text: "Next",
                       color: AppTheme.mainColor,
-                      onPress: () => Get.to(CategoryPage())),
+                      onPress: () => Get.to(CategoryPage(teamInformation: {},))),
                 ],
               ),
             ),
