@@ -37,6 +37,7 @@ dependencies:
   dashed_circular_progress_bar: ^0.0.4
   dio: ^4.0.6
   shared_preferences: ^2.0.15
+  carousel_slider: ^4.1.1
 
 dev_dependencies:
   flutter_test:

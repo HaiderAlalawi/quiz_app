@@ -5,6 +5,8 @@ import 'package:computiqquizapp/category_page/category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../app_tools/app_theme.dart';
+import '../app_tools/build_category_sheet.dart';
+import '../app_tools/build_help_sheet.dart';
 import '../app_tools/data.dart';
 
 
@@ -19,21 +21,8 @@ class _QuestionsPageState extends State<QuestionsPage> {
 
   @override
   void initState() {
-    startTime();
+    Services.startTime();
     super.initState();
-  }
-
-  int seconds = AppData.questionData.seconds;
-  Timer? timer;
-  void startTime() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
-      if (seconds > 0) {
-        setState(() => seconds--);
-      } else {
-        timer?.cancel();
-
-      }
-    });
   }
 
   @override
@@ -49,15 +38,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20,top: 20),
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                teamName(
-                  name: "Team 1",
-                ),
                 questionText(
                   name:
                   AppData.questionData.title,
@@ -68,7 +54,10 @@ class _QuestionsPageState extends State<QuestionsPage> {
                           children: AppData.questionData.answers.map((e) => options(text: e.title)).toList(),
                         ),
                       ),
-                Center(child: buildTimer()),
+                Obx(() {
+                    return Center(child: buildTimer());
+                  }
+                ),
               ],
             ),
             Align(
@@ -84,18 +73,18 @@ class _QuestionsPageState extends State<QuestionsPage> {
                         onPress: () {
                           showModalBottomSheet(
                               backgroundColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                   borderRadius: BorderRadius.vertical(
                                       top: Radius.circular(15))),
                               isScrollControlled: true,
                               context: context,
-                              builder: (context) => buldSheet());
+                              builder: (context) =>  BuildHelpSheet(help: AppData.helpButton,));
                         },
                       ),
                       button(
                           text: "Next",
                           color: AppTheme.mainColor,
-                          onPress: () => Get.to(CategoryPage())),
+                          onPress: () => Services.nextButton()),
                     ]
                 ),
               ),
@@ -115,12 +104,12 @@ class _QuestionsPageState extends State<QuestionsPage> {
           fit: StackFit.expand,
           children: [
             CircularProgressIndicator(
-              value: seconds / 1,
+              value: AppData.seconds / 1,
               strokeWidth: 5,
               valueColor: AlwaysStoppedAnimation(Color(0xFFF44848)),
             ),
             CircularProgressIndicator(
-              value: seconds / AppData.questionData.seconds,
+              value: AppData.seconds / AppData.questionData.seconds,
               strokeWidth: 5,
               valueColor: AlwaysStoppedAnimation(Color(0xFF33ADF8)),
             ),
@@ -133,7 +122,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
 
   Widget buildTime() {
     return Text(
-      "${seconds}",
+      "${AppData.seconds}",
       style: TextStyle(
           fontWeight: FontWeight.bold, color: Colors.black, fontSize: 40),
     );
@@ -157,103 +146,9 @@ class ButtonWidget extends StatelessWidget {
       );
 }
 
-class buldSheet extends StatelessWidget {
-  const buldSheet({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.4,
-      builder: (_, controller) => Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 20, bottom: 20),
-              child: const Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 25,
-              ),
-            ),
-            Expanded(
-              child: ListView(
-                children: [
-                  buldSheetContainer(
-                    text: "text",
-                    onPress: () => Get.to(QuestionsPage()),
-                  ),
-                  buldSheetContainer(
-                    text: "text",
-                    onPress: () =>  Services.getQuestion('f8517441-0941-45b1-83b2-1701b69aee7a'),
-                  ),
-                  buldSheetContainer(
-                    text: "text",
-                    onPress: () => print("1"),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
-class buldSheetContainer extends StatelessWidget {
-  const buldSheetContainer({
-    Key? key,
-    required this.text,
-    required this.onPress,
-  }) : super(key: key);
-  final String text;
-  final void Function() onPress;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 7, bottom: 7, right: 20, left: 20),
-      child: Container(
-        height: 60,
-        width: 156,
-        decoration: BoxDecoration(
-            border: Border.all(color: AppTheme.borderColor, width: 1),
-            borderRadius: BorderRadius.circular(5)),
-        child: TextButton(
-          onPressed: () {
-            onPress();
-          },
-          style: TextButton.styleFrom(
-            primary: AppTheme.textColor,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-                Icon(
-                  Icons.play_arrow_rounded,
-                  color: AppTheme.mainColor,
-                  size: 25,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+
 
 class button extends StatelessWidget {
   const button({

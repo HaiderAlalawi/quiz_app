@@ -1,7 +1,13 @@
+import 'package:computiqquizapp/app_tools/data.dart';
 import 'package:computiqquizapp/app_tools/services.dart';
-import 'package:computiqquizapp/category_page/category.dart';
+import 'package:computiqquizapp/homeScreen/tools/category_move_card.dart';
+import 'package:computiqquizapp/homeScreen/tools/category_text.dart';
+import 'package:computiqquizapp/homeScreen/tools/image_clip.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
+import '../app_tools/data_from_json/category_json.dart';
+import '../core/Responsive/responsive_screen.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -12,226 +18,53 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int number = 1;
+  late Future<List<CategoryJson>> data;
+
+
+  @override
+  void initState()  {
+    // TODO: implement initState
+    super.initState();
+    data =  getProductList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
 
+    MediaQueryData queryData = MediaQuery.of(context);
+    ResponsiveScreenApp _sizeResponsove = ResponsiveScreenApp(context, queryData);
+
+    return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Image.asset(
           "images/image.png",
-          width: 100,
+          width: _sizeResponsove.iconAppBar,
         ),
+
+        actions: [
+          IconButton(
+              onPressed: () {
+                Services.logOut();
+                // LogOut Function
+              },
+              icon:  Icon(Icons.logout, color: Colors.red,size: _sizeResponsove.iconApp,)
+
+          )
+        ],
       ),
+
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomRight: Radius.circular(200),
-                  bottomLeft: Radius.circular(200),
-                ),
-                child: Image.asset(
-                  "images/cover.png",
-                  height: 250,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Category',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  )),
-            ),
-            SizedBox(
-              height: 250,
-              child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                children: [
+            ImageClip(sizeResponsove: _sizeResponsove),
+            CategoryText(sizeResponsove: _sizeResponsove, text: 'Category'),
+            CategoryMoveCard(sizeResponsove: _sizeResponsove, data: data),
+            CategoryText(sizeResponsove: _sizeResponsove, text: 'Enter Number Of Teams'),
 
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 210,
-                    width: 190,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(0, 1),
-                          blurRadius: 5,
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            "images/2.jpeg",
-                            height: 190,
-                            width: double.infinity,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Spacer(),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text("Category One", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),textAlign: TextAlign.start,)
-                        ),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text("10 Question", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black45),textAlign: TextAlign.start,)
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 210,
-                    width: 190,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(0, 1),
-                          blurRadius: 5,
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            "images/1.jpeg",
-                            height: 190,
-                            width: double.infinity,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Spacer(),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text("Category One", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),textAlign: TextAlign.start,)
-                        ),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text("10 Question", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black45),textAlign: TextAlign.start,)
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 210,
-                    width: 190,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(0, 1),
-                          blurRadius: 5,
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            "images/2.jpeg",
-                            height: 190,
-                            width: double.infinity,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Spacer(),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text("Category One", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),textAlign: TextAlign.start,)
-                        ),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text("10 Question", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black45),textAlign: TextAlign.start,)
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 210,
-                    width: 190,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: const Offset(0, 1),
-                          blurRadius: 5,
-                          color: Colors.black.withOpacity(0.3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.asset(
-                            "images/2.jpeg",
-                            height: 190,
-                            width: double.infinity,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Spacer(),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text("Category One", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),textAlign: TextAlign.start,)
-                        ),
-                        SizedBox(
-                            width: double.infinity,
-                            child: Text("10 Question", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black45),textAlign: TextAlign.start,)
-                        ),
-                      ],
-                    ),
-                  ),
-
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              padding: const EdgeInsets.all(8.0),
-              child: const SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Enter Number Of Teams',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  )),
-            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -248,10 +81,14 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         InkWell(
                             onTap: () {
-                              if (number > 0) {
+                              if (AppData.teamInformation.length > 1) {
                                 setState(() {
-                                  number--;
+                                  AppData.teamInformation.removeLast();
+
                                 });
+                                print(AppData.teamInformation);
+                                print(AppData.teamInformation.length);
+
                               }
                             },
                             child: const Icon(
@@ -267,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(3),
                               color: Colors.white),
                           child: Text(
-                            number.toString(),
+                            AppData.teamInformation.length.toString(),
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 25),
                           ),
@@ -275,8 +112,11 @@ class _HomePageState extends State<HomePage> {
                         InkWell(
                             onTap: () {
                               setState(() {
-                                number++;
+                                AppData.teamInformation.add({'teamNumber':AppData.teamInformation.length + 1,'points': 0}
+                                    );
                               });
+                              print(AppData.teamInformation);
+                              print(AppData.teamInformation.length);
                             },
                             child: const Icon(
                               Icons.add,
@@ -289,13 +129,12 @@ class _HomePageState extends State<HomePage> {
                   TextButton(
                     style: TextButton.styleFrom(
                       side:
-                          const BorderSide(color: Colors.blueAccent, width: 2),
+                      const BorderSide(color: Colors.blueAccent, width: 2),
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
                     ),
                     onPressed: () {
                       Services.getCategory();
-                      print('Pressed');
                     },
                     child: const Padding(
                       padding: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -309,9 +148,33 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+
+
           ],
         ),
       ),
     );
   }
+
+  Future<List<CategoryJson>> getProductList() async {
+    List<CategoryJson> _list = [];
+    Dio dio = Dio();
+    final String token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QifQ.yp7Y7D-c1Fi-8SIRUB_6uqqiah2338e4X5F6f-z23gQ';
+
+    dio.options.headers['authorization'] = 'Bearer $token';
+    var response = await dio.get('https://computiqquizapp.herokuapp.com/computiq/quiz_app/get_all_categories');
+
+    if (response.statusCode == 200 && response.data != null) {
+
+      response.data.forEach((e){
+        _list.add(CategoryJson.fromJson(e));
+      });
+    }else {
+      return [];
+    }
+
+    return _list;
+
+  }
 }
+

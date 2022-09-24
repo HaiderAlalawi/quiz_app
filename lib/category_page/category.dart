@@ -1,7 +1,11 @@
 import 'package:computiqquizapp/app_tools/data.dart';
+import 'package:computiqquizapp/app_tools/data_from_json/category_json.dart';
 import 'package:flutter/material.dart';
 import '../app_tools/app_theme.dart';
+import '../app_tools/build_category_sheet.dart';
 import '../questions_page/questions_page.dart';
+
+//AppData.categoryData[0].questionsId
 
 class CategoryPage extends StatefulWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -30,16 +34,16 @@ class _CategoryPageState extends State<CategoryPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               teamName(
-                name: "Team 1 ",
+                name: 'Team ${AppData.teamInformation[AppData.currentTeam]['teamNumber'].toString()}',
               ),
               Expanded(
                 child: ListView(
                   children: AppData.categoryData.map(
-                    (e) => categoryCard(
+                    (e) => CategoryCard(
                   image: e.categoryImage,
                   name: e.categoryTitle,
-                  questiones: e.questionsNumber.toString(),
-                  description:e.categoryDescrition),
+                  questionsNumber: e.questionsNumber.toString(),
+                  description:e.categoryDescrition, categoryQuestions: e.questionsId,),
         ).toList(),
                 ),
               ),
@@ -51,18 +55,19 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 }
 
-class categoryCard extends StatelessWidget {
-  const categoryCard({
+class CategoryCard extends StatelessWidget {
+  const CategoryCard({
     Key? key,
     required this.image,
     required this.name,
     required this.description,
-    required this.questiones,
+    required this.questionsNumber, required this.categoryQuestions,
   }) : super(key: key);
   final String image;
   final String name;
   final String description;
-  final String questiones;
+  final String questionsNumber;
+  final List<QuestionsId> categoryQuestions;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +79,7 @@ class categoryCard extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
             isScrollControlled: true,
             context: context,
-            builder: (context) => buldSheet());
+            builder: (context) => BuildCategorySheet(question: categoryQuestions));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 50),
@@ -88,10 +93,10 @@ class categoryCard extends StatelessWidget {
               child: Container(
                 width: 305,
                 height: 100,
-                child: Image.asset(
+                child: Image.network(
+                  image,
                   fit: BoxFit.fitWidth,
-                  'image',
-                    errorBuilder: (context, url, error) => const Icon(Icons.error),
+                  errorBuilder: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),
@@ -109,7 +114,7 @@ class categoryCard extends StatelessWidget {
               height: 5,
             ),
             Text(
-              questiones,
+              questionsNumber,
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
