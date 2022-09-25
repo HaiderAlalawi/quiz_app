@@ -1,3 +1,4 @@
+import 'package:computiqquizapp/login_screen/tools/LogoImage.dart';
 import 'package:computiqquizapp/login_screen/tools/login_button.dart';
 import 'package:computiqquizapp/login_screen/tools/login_textField.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +24,7 @@ class _LoginPageState extends State<LoginPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  'images/image.png',
-                  width: 250,
-                ),
+                const LogoImage(),
                 LoginTextField(
                     title: 'Username',
                     isSecure: false,
@@ -44,3 +42,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+

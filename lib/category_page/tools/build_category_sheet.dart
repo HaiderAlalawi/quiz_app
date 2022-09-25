@@ -1,7 +1,7 @@
 import 'package:computiqquizapp/app_tools/data_from_json/category_json.dart';
 import 'package:computiqquizapp/app_tools/services.dart';
 import 'package:flutter/material.dart';
-import 'build_sheet_container.dart';
+import '../../app_tools/bottom_sheet_container.dart';
 
 class BuildCategorySheet extends StatelessWidget {
 

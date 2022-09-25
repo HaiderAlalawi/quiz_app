@@ -1,5 +1,3 @@
-
-
 import 'package:computiqquizapp/app_tools/services.dart';
 import 'package:get/get.dart';
 import 'package:computiqquizapp/app_tools/data_from_json/question_json.dart';
@@ -12,10 +10,10 @@ abstract class AppData{
   static  List<CategoryJson> categoryData=[];
   static int currentTeam=0;
   static RxInt seconds=0.obs;
-  static List  teamInformation = [
+  static RxList teamInformation = [
     {'teamNumber':1,'points': 0},
-  ];
-  static List helpButton=[
+  ].obs;
+  static List helpButtonOptions=[
     {'buttonName':'Remove two answers',
      'pressed':  () {Services.helpRemoveTwoAnswers();}
     },
@@ -25,7 +23,6 @@ abstract class AppData{
     {'buttonName':'Random question',
       'pressed': () {Services.helpRandomQuestion();}
     },
-
 
   ];
 
