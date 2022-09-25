@@ -160,7 +160,7 @@ class Services {
   static SnackbarController mySnackBar(
       {required String title,required Color titleColor,required String message}) {
     return Get.snackbar('', '',
-          titleText:  Text('Great',
+          titleText:  Text(title,
               style: TextStyle(
                   color: titleColor,
                   fontSize: 18,
