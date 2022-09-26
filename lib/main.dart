@@ -1,3 +1,4 @@
+import 'package:computiqquizapp/score_page/result_question.dart';
 import 'package:computiqquizapp/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
@@ -38,7 +39,7 @@ class ButtonWidget extends StatelessWidget {
         primary: AppTheme.mainColor, onPrimary: Colors.white),
     child: Text(
       text,
-      style: TextStyle(fontSize: 18),
+      style: const TextStyle(fontSize: 18),
     ),
     onPressed: onClcked,
   );
