@@ -35,7 +35,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 child: ListView(
                   children: AppData.categoryData
                       .map(
-                        (e) => CategoryCard(
+                        (e) =>  CategoryCard(
                           image: e.categoryImage,
                           name: e.categoryTitle,
                           questionsNumber: e.questionsNumber.toString(),

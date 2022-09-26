@@ -20,7 +20,7 @@ class Options extends StatelessWidget {
         height: 53,
         width: double.maxFinite,
         child: TextButton(
-                  onPressed: ()=> Services.endAnswer(correct, questionPoint?? 0) ,
+                  onPressed: ()=> Services.lockAnswer(correct, questionPoint?? 0) ,
                   style: TextButton.styleFrom(
                     alignment: Alignment.center,
                     shape:

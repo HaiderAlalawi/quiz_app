@@ -3,6 +3,8 @@ import 'package:computiqquizapp/app_tools/data_from_json/category_json.dart';
 import 'package:computiqquizapp/core/Responsive/responsive_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../../app_tools/data.dart';
+
 class CategoryMoveCard extends StatelessWidget {
   const CategoryMoveCard({
     Key? key,
@@ -49,15 +51,16 @@ class CategoryMoveCard extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
-                              child: Image.asset(
-                                'images/1.jpeg',
+                              child: Image.network(
+                                AppData.baseUrl+snapshot.data[index].categoryImage,
+                                errorBuilder: (context, url, error) => const Icon(Icons.error),
                                 height: _sizeResponsove.imageCategory,
                                 width: double.infinity,
                                 fit: BoxFit.fill,
                               ),
                             ),
 
-                            Spacer(),
+                            const Spacer(),
                             SizedBox(
                                 width: double.infinity,
                                 child: Text(
@@ -89,8 +92,8 @@ class CategoryMoveCard extends StatelessWidget {
                     enableInfiniteScroll: true,
                     reverse: false,
                     autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 3),
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration: const Duration(milliseconds: 800),
                     autoPlayCurve: Curves.fastOutSlowIn,
                     enlargeCenterPage: false,
                     scrollDirection: Axis.horizontal,

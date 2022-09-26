@@ -1,5 +1,6 @@
 import 'package:computiqquizapp/app_tools/services.dart';
 import 'package:computiqquizapp/questions_page/tools/button.dart';
+import 'package:computiqquizapp/questions_page/tools/end_quiz_icon.dart';
 import 'package:computiqquizapp/questions_page/tools/options.dart';
 import 'package:computiqquizapp/questions_page/tools/question_text.dart';
 import 'package:computiqquizapp/questions_page/tools/timer_widget.dart';
@@ -31,6 +32,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
           elevation: 0,
           backgroundColor: Colors.transparent,
           title: const LogoImageAppBar(),
+          actions: const [EndQuizIcon()],
         ),
         body: Padding(
             padding: const EdgeInsets.all(20),
@@ -95,3 +97,4 @@ class _QuestionsPageState extends State<QuestionsPage> {
             ));
   }
 }
+

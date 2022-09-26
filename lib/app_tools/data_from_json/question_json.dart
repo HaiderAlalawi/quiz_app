@@ -2,6 +2,7 @@
 //
 //     final welcome = welcomeFromJson(jsonString);
 import 'dart:convert';
+import 'package:get/get.dart';
 
 Question welcomeFromJson(String str) => Question.fromJson(json.decode(str));
 
@@ -20,14 +21,14 @@ class Question {
   String category;
   int points;
   int seconds;
-  List<Answer> answers;
+  RxList<Answer> answers;
 
   factory Question.fromJson(Map<String, dynamic> json) => Question(
     title: json["title"],
     category: json["category"],
     points: json["points"],
     seconds: json["seconds"],
-    answers: List<Answer>.from(json["answers"].map((x) => Answer.fromJson(x))),
+    answers: RxList<Answer>.from(json["answers"].map((x) => Answer.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {

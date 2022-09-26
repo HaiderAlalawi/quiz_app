@@ -1,3 +1,4 @@
+import 'package:computiqquizapp/app_tools/data.dart';
 import 'package:computiqquizapp/app_tools/data_from_json/category_json.dart';
 import 'package:computiqquizapp/app_tools/services.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,11 @@ import '../../app_tools/bottom_sheet_container.dart';
 class BuildCategorySheet extends StatelessWidget {
 
    const BuildCategorySheet({
-    Key? key, required this.question,
+    Key? key, required this.question, required this.categoryName,
   }) :super(key: key);
 
    final List<QuestionsId> question;
+   final String categoryName;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,11 @@ class BuildCategorySheet extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: question.map((e) => BuildSheetContainer(text: e.questionNumber.toString(),
-                    pressed: (){Services.getQuestion(e.id);})).toList()
+                    pressed: (){
+                  AppData.categoryName=categoryName;
+                  AppData.questionId=e.id;
+                  Services.openQuestion(questionId: e.id);
+                 })).toList()
               ),
             ),
           ],

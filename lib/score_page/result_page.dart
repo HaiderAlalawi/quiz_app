@@ -1,17 +1,19 @@
 
+import 'package:computiqquizapp/app_tools/logo_image_app_bar.dart';
+import 'package:computiqquizapp/homeScreen/home_screen.dart';
 import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class ResultQuestion extends StatefulWidget {
+class ResultPage extends StatefulWidget {
 
-  const ResultQuestion({Key? key}) : super(key: key);
+  const ResultPage({Key? key}) : super(key: key);
 
   @override
-  State<ResultQuestion> createState() => _ResultQuestionState();
+  State<ResultPage> createState() => _ResultPageState();
 }
 
-class _ResultQuestionState extends State<ResultQuestion> {
+class _ResultPageState extends State<ResultPage> {
 
   final ValueNotifier<double> _valueNotifier = ValueNotifier(0);
 
@@ -25,11 +27,7 @@ class _ResultQuestionState extends State<ResultQuestion> {
         elevation: 0,
         centerTitle: false,
         backgroundColor: Colors.transparent,
-        title: Image.asset(
-          "images/image.png",
-          width: 100,
-          height: 100,
-        ),
+        title: const LogoImageAppBar()
       ),
 
       body: Center(
@@ -102,6 +100,8 @@ class _ResultQuestionState extends State<ResultQuestion> {
                 ),
               ),
             ),
+            TextButton(onPressed: (){Get.offAll(const HomePage());
+            }, child: Text('back')),
           ],
         ),
       ),

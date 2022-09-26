@@ -1,3 +1,4 @@
+import 'package:computiqquizapp/app_tools/data.dart';
 import 'package:flutter/material.dart';
 import '../../app_tools/app_theme.dart';
 import 'build_category_sheet.dart';
@@ -28,7 +29,7 @@ class CategoryCard extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
             isScrollControlled: true,
             context: context,
-            builder: (context) => BuildCategorySheet(question: categoryQuestions));
+            builder: (context) => BuildCategorySheet(question: categoryQuestions, categoryName: name,));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 50),
@@ -43,7 +44,7 @@ class CategoryCard extends StatelessWidget {
                 width: 305,
                 height: 100,
                 child: Image.network(
-                  image,
+                AppData.baseUrl+image,
                   fit: BoxFit.fitWidth,
                   errorBuilder: (context, url, error) => const Icon(Icons.error),
                 ),
@@ -53,7 +54,7 @@ class CategoryCard extends StatelessWidget {
               height: 10,
             ),
             CategoryCardText(title: name, size: 20, weight: FontWeight.bold),
-            CategoryCardText(title: questionsNumber, size: 14, weight: FontWeight.bold,color:AppTheme.gray2 ),
+            CategoryCardText(title: '$questionsNumber Question', size: 14, weight: FontWeight.bold,color:AppTheme.gray2 ),
             CategoryCardText(title: description, size: 14, weight: FontWeight.w500,align:TextAlign.justify),
           ],
         ),

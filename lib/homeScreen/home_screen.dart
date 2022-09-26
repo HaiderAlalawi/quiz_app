@@ -1,3 +1,4 @@
+import 'package:computiqquizapp/app_tools/data.dart';
 import 'package:computiqquizapp/app_tools/services.dart';
 import 'package:computiqquizapp/homeScreen/tools/appbar/logo_image.dart';
 import 'package:computiqquizapp/homeScreen/tools/appbar/logout_button.dart';
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     data = Services.getProductList();
+    print(AppData.teamInformation);
   }
 
   @override
