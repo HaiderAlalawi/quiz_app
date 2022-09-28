@@ -1,4 +1,3 @@
-import 'package:computiqquizapp/app_tools/data.dart';
 import 'package:computiqquizapp/app_tools/services.dart';
 import 'package:computiqquizapp/homeScreen/tools/appbar/logo_image.dart';
 import 'package:computiqquizapp/homeScreen/tools/appbar/logout_button.dart';
@@ -7,6 +6,7 @@ import 'package:computiqquizapp/homeScreen/tools/category_text.dart';
 import 'package:computiqquizapp/homeScreen/tools/image_clip.dart';
 import 'package:computiqquizapp/homeScreen/tools/team_start_row.dart';
 import 'package:flutter/material.dart';
+import '../app_tools/app_theme.dart';
 import '../app_tools/data_from_json/category_json.dart';
 import '../core/Responsive/responsive_screen.dart';
 
@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     data = Services.getProductList();
-    print(AppData.teamInformation);
   }
 
   @override
@@ -35,6 +34,7 @@ class _HomePageState extends State<HomePage> {
         ResponsiveScreenApp(context, queryData);
 
     return Scaffold(
+      backgroundColor: AppTheme.backGround,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         elevation: 0,

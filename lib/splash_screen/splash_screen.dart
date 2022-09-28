@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:computiqquizapp/app_tools/app_theme.dart';
 import 'package:flutter/material.dart';
 import '../login_screen/LoginScreen.dart';
 
@@ -22,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.backGround,
       body: Center(
         child: Image.asset('images/Logo.gif',
           width: double.maxFinite,

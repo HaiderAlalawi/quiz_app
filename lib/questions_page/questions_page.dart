@@ -28,6 +28,8 @@ class _QuestionsPageState extends State<QuestionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppTheme.backGround,
+
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -71,13 +73,16 @@ class _QuestionsPageState extends State<QuestionsPage> {
                             text: "Help",
                             color: AppTheme.yellow,
                             onPress: () {
-                              bottomSheet(context);
+                              AppData.seconds.value != 0? AppData.teamInformation[AppData.currentTeam]['help'].length==0?
+                              Services.mySnackBar(title: 'Sorry', titleColor: AppTheme.red, message: 'No more help.')
+                                  : bottomSheet(context):null;
                             },
                           ),
                           Button(
                               text: "Next",
                               color: AppTheme.mainColor,
                               onPress: () => Services.nextButton()),
+
                         ]),
                   ),
                 )
@@ -93,7 +98,7 @@ class _QuestionsPageState extends State<QuestionsPage> {
         isScrollControlled: true,
         context: context,
         builder: (context) => BuildHelpSheet(
-              help: AppData.helpButtonOptions,
+              help: AppData.teamInformation[AppData.currentTeam]['help'],
             ));
   }
 }

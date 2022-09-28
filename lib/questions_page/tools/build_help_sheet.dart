@@ -3,11 +3,11 @@ import '../../app_tools/bottom_sheet_container.dart';
 
 class BuildHelpSheet extends StatelessWidget {
 
-   const BuildHelpSheet({
-    Key? key, required this.help,
+    const BuildHelpSheet({
+    Key? key,  required this.help,
   }) :super(key: key);
 
-   final List help;
+    final List help;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +28,9 @@ class BuildHelpSheet extends StatelessWidget {
             ),
             Expanded(
               child: ListView(
-                children: help.map((e) => BuildSheetContainer(text: e['buttonName'],
-                    pressed: e['pressed'])).toList()
-              ),
+                    children: help.map((e) => BuildSheetContainer(text: e['buttonName'],
+                        pressed: e['pressed'])).toList()
+                  )
             ),
           ],
         ),

@@ -1,12 +1,9 @@
-// To parse this JSON data, do
-//
-//     final welcome = welcomeFromJson(jsonString);
 import 'dart:convert';
 import 'package:get/get.dart';
 
-Question welcomeFromJson(String str) => Question.fromJson(json.decode(str));
+Question fromJson(String str) => Question.fromJson(json.decode(str));
 
-String welcomeToJson(Question data) => json.encode(data.toJson());
+String toJson(Question data) => json.encode(data.toJson());
 
 class Question {
   Question({

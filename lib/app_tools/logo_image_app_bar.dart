@@ -8,7 +8,7 @@ class LogoImageAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      "images/image.png",
+      "images/Logo.png",
       height: 100,
       width: 100,
     );

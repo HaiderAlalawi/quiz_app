@@ -3,6 +3,7 @@ import 'package:computiqquizapp/category_page/tools/category_card.dart';
 import 'package:computiqquizapp/category_page/tools/team_name.dart';
 import 'package:flutter/material.dart';
 
+import '../app_tools/app_theme.dart';
 import '../app_tools/logo_image_app_bar.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -16,6 +17,8 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.backGround,
+
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,

@@ -3,6 +3,8 @@ import 'package:computiqquizapp/login_screen/tools/login_button.dart';
 import 'package:computiqquizapp/login_screen/tools/login_textField.dart';
 import 'package:flutter/material.dart';
 
+import '../app_tools/app_theme.dart';
+
 final usernameControl = TextEditingController();
 final passwordControl = TextEditingController();
 
@@ -17,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppTheme.backGround,
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 150),

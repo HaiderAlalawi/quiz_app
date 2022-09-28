@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:computiqquizapp/app_tools/app_theme.dart';
 import 'package:computiqquizapp/app_tools/data.dart';
 import 'package:computiqquizapp/app_tools/data_from_json/category_json.dart';
 import 'package:computiqquizapp/app_tools/data_from_json/question_json.dart';
@@ -31,7 +32,6 @@ class Services {
           Get.offAll(const HomePage());
         }
       } on DioError catch (e) {
-        print(e.response!.statusCode);
         if (e.response!.statusCode == 401) {
           mySnackBar(
               title: 'ERROR',
@@ -98,18 +98,41 @@ class Services {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
     AppData.categoryData.clear();
-
     Get.offAll(const LoginPage());
   }
 
   static nextButton() {
-    if (AppData.currentTeam < AppData.teamInformation.length - 1) {
-      AppData.currentTeam++;
-    } else {
-      AppData.currentTeam = 0;
+    if (AppData.seconds.value == 0) {
+      if (AppData.teamInformation.length > AppData.questionsNumber &&
+          AppData.currentTeam == (AppData.teamInformation.length - 1)) {
+        mySnackBar(title: 'Sorry',
+            titleColor: AppTheme.red,
+            message: 'There is not enough question to all team, please end the session.');
+      } else {
+        if (AppData.currentTeam < AppData.teamInformation.length - 1) {
+          AppData.currentTeam++;
+        } else {
+          AppData.currentTeam = 0;
+        }
+        removeQuestion();
+        stopTime();
+        Get.offAll(const CategoryPage());
+      }
     }
-    stopTime();
-    Get.offAll(const CategoryPage());
+  }
+
+  static letsStart() async{
+    await Services.getCategory();
+    for (var e in AppData.categoryData) {
+      AppData.questionsNumber+= e.questionsNumber;
+    }
+    if(AppData.teamInformation.length > AppData.questionsNumber){
+      mySnackBar(title: 'Sorry', titleColor: AppTheme.red, message: 'There is not enough question to all team it just ${AppData.questionsNumber} questions, please decrease number of team.');
+      AppData.questionsNumber=0;
+      AppData.categoryData.clear();
+    }else{
+      Get.offAll(const CategoryPage());
+    }
   }
 
   static Timer? timer;
@@ -137,7 +160,18 @@ class Services {
 
   static increaseTeam() {
     AppData.teamInformation
-        .add({'teamNumber': AppData.teamInformation.length + 1, 'points': 0});
+        .add({'teamNumber': AppData.teamInformation.length + 1, 'points': 0,'help':[
+      {'buttonName':'Remove two answers',
+        'pressed':  () {Services.helpRemoveTwoAnswers();}
+      },
+      {'buttonName':'Audience answer',
+        'pressed': () {Services.helpAudienceSolve();}
+      },
+      {'buttonName':'Random question',
+        'pressed': () {Services.helpRandomQuestion();}
+      },
+
+    ]});
   }
 
   static void helpRemoveTwoAnswers() {
@@ -150,6 +184,8 @@ class Services {
           length--;
         }
       }
+      Get.back();
+      AppData.teamInformation[AppData.currentTeam]['help'].removeWhere((e) => e['buttonName']== 'Remove two answers');
     }
   }
 
@@ -158,11 +194,15 @@ class Services {
       AppData.seconds.value += 60;
       AppData.questionData.seconds = AppData.seconds.value;
     }
+    Get.back();
+    AppData.teamInformation[AppData.currentTeam]['help'].removeWhere((e) => e['buttonName']== 'Audience answer');
   }
 
   static void helpRandomQuestion() async{
     if (AppData.seconds.value != 0) {
       stopTime();
+      Get.back();
+      AppData.teamInformation[AppData.currentTeam]['help'].removeWhere((e) => e['buttonName']== 'Random question');
       int randomCategory = Random().nextInt(AppData.categoryData.length);
       await getQuestion(
           AppData.categoryData[randomCategory].questionsId[Random().nextInt(
@@ -193,6 +233,7 @@ class Services {
         e.questionsId.removeWhere((e) => e.id == AppData.questionId);
         e.questionsNumber=e.questionsId.length;
     }
+    AppData.questionsNumber-=1;
     AppData.categoryData.removeWhere((e) => e.questionsId.isEmpty);
   }
 
@@ -202,16 +243,29 @@ class Services {
   }
 
   static void endQuiz() {
-    Get.offAll(const ResultPage());
+    if (AppData.seconds.value == 0) {
+      Get.offAll(const ResultPage());
+    }
   }
 
   static void backToHome() {
     AppData.categoryData.clear();
     AppData.currentTeam = 0;
+    AppData.questionsNumber=0;
     AppData.teamInformation = [
-      {'teamNumber':1,'points': 0},
+      {'teamNumber':1,'points': 0,'help':[
+        {'buttonName':'Remove two answers',
+          'pressed':  () {Services.helpRemoveTwoAnswers();}
+        },
+        {'buttonName':'Audience answer',
+          'pressed': () {Services.helpAudienceSolve();}
+        },
+        {'buttonName':'Random question',
+          'pressed': () {Services.helpRandomQuestion();}
+        },
+      ]}
     ].obs;
-    print(AppData.teamInformation);
+    Get.offAll(const HomePage());
   }
 
   static SnackbarController mySnackBar(

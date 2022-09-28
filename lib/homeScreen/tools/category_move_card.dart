@@ -59,28 +59,33 @@ class CategoryMoveCard extends StatelessWidget {
                                 fit: BoxFit.fill,
                               ),
                             ),
-
                             const Spacer(),
-                            SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  snapshot.data[index].categoryTitle,
-                                  style:  TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: _sizeResponsove.textResponsiveApp - 8),
-                                  textAlign: TextAlign.start,
-                                )),
-                            SizedBox(
-                                width: double.infinity,
-                                child: Text(
-                                  "${snapshot.data[index].questionsNumber} Questions" ,
-                                  style:  TextStyle(
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4,right: 4),
+                              child: SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    snapshot.data[index].categoryTitle,
+                                    style:  TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: _sizeResponsove.textResponsiveApp - 10),
+                                    textAlign: TextAlign.start,
+                                  )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4,right: 4,bottom:10),
+                              child: SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    "${snapshot.data[index].questionsNumber} Questions" ,
+                                    style:  TextStyle(
 
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: _sizeResponsove.textResponsiveApp - 10,
-                                      color: Colors.black45),
-                                  textAlign: TextAlign.start,
-                                )),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: _sizeResponsove.textResponsiveApp - 12,
+                                        color: Colors.black45),
+                                    textAlign: TextAlign.start,
+                                  )),
+                            ),
                           ],
                         ),
                       ),

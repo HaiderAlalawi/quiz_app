@@ -18,7 +18,7 @@ class LoginButton extends StatelessWidget {
           onPressed: (){
             Services.signIn();
           },
-          child: const Text('login' ,style: TextStyle(fontSize: 20,color: Colors.white),),
+          child: const Text('Login' ,style: TextStyle(fontSize: 20,color: Colors.white),),
         ),
       ),
     );
