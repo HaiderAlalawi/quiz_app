@@ -24,7 +24,7 @@ class Services {
     if (usernameControl.text.isNotEmpty && passwordControl.text.isNotEmpty) {
       try {
         var response = await dio.post(
-            '${AppData.baseUrl}/computiq/quiz_app/signin?username=${usernameControl.text}&password=${passwordControl.text}');
+            'https://haideralalawi.pythonanywhere.com/computiq/quiz_app/signin?username=${usernameControl.text}&password=${passwordControl.text}');
         if (response.statusCode == 200) {
           await prefs.setString('token', response.data['token']);
           usernameControl.clear();
