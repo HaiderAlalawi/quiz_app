@@ -14,9 +14,9 @@ class BackHomeButton extends StatelessWidget {
         child: Container(
           width: double.maxFinite,
           color: AppTheme.mainColor,
-          height: 50,
+          height: 70,
           child: TextButton(onPressed: ()=> Services.backToHome(),
-            child:const Text('Back to Home page',style: TextStyle(color: AppTheme.textColor,fontSize: 16,fontWeight: FontWeight.bold),) ,),
+            child:const Text('Back to Home page',style: TextStyle(color: AppTheme.textColor,fontSize: 18,fontWeight: FontWeight.bold),) ,),
         )
     );
   }

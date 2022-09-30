@@ -74,6 +74,9 @@ class Services {
     response.data.forEach((e) {
       AppData.categoryData.add(CategoryJson.fromJson(e));
     });
+    for (var e in AppData.categoryData) {
+      AppData.questionsNumber+= e.questionsNumber;
+    }
   }
 
   static Future<List<CategoryJson>> getProductList() async {
@@ -103,6 +106,9 @@ class Services {
 
   static nextButton() {
     if (AppData.seconds.value == 0) {
+      print(AppData.teamInformation.length);
+      print(AppData.questionsNumber);
+
       if (AppData.teamInformation.length > AppData.questionsNumber &&
           AppData.currentTeam == (AppData.teamInformation.length - 1)) {
         mySnackBar(title: 'Sorry',
@@ -123,9 +129,7 @@ class Services {
 
   static letsStart() async{
     await Services.getCategory();
-    for (var e in AppData.categoryData) {
-      AppData.questionsNumber+= e.questionsNumber;
-    }
+
     if(AppData.teamInformation.length > AppData.questionsNumber){
       mySnackBar(title: 'Sorry', titleColor: AppTheme.red, message: 'There is not enough question to all team it just ${AppData.questionsNumber} questions, please decrease number of team.');
       AppData.questionsNumber=0;
@@ -216,7 +220,6 @@ class Services {
       null;
     } else {
       AppData.seconds.value = 0;
-      removeQuestion();
       if (correct) {
         AppData.teamInformation[AppData.currentTeam]['points'] += point;
         mySnackBar(
