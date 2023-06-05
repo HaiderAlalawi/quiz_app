@@ -1,7 +1,7 @@
 # Quiz App
 
-A new Flutter project for quiz time for example to company that give courses to motivate the students.
-The app placed with the trainer and start the quiz with questions that added by admin panel with django. 
+A new Flutter project for quiz for example to company that give any courses in any field.To motivate the students in course and create fun. 
+The app was put in the trainer phone then the quiz started with questions which it is added by admin panel with django-ninja framwork.
 
 ## Getting Started
 
